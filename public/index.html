@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+  <title>The Flipping Tile</title>
+  <script type="module" src="js/components/my-flipping-tile/my-flipping-tile.js"></script>
+  <script type="module" src="js/index.js"></script>
+</head>
+
+<body>
+
+  <h1>The Flipping Tiles</h1>
+
+  <div class="grid-container" style="margin:5rem;">
+    <my-flipping-tile>
+      <img src="./images/1.png" alt="octopus" />
+    </my-flipping-tile>
+    <my-flipping-tile>
+      <img src="./images/2.png" alt="phonograph" />
+    </my-flipping-tile>
+    <my-flipping-tile face-up disabled>
+      <img src="./images/2.png" alt="phonograph" />
+    </my-flipping-tile>
+    <my-flipping-tile hidden>
+      <img src="./images/2.png" alt="phonograph" />
+    </my-flipping-tile>
+    <my-flipping-tile class="backside-magenta">
+      <img src="./images/1.png" alt="octopus" />
+    </my-flipping-tile>
+    <my-flipping-tile class="backside-green-with-image">
+      <img src="./images/2.png" alt="phonograph" />
+    </my-flipping-tile>
+  </div>
+
+  <my-flipping-tile face-up>
+    <img src="./images/2.png" alt="phonograph" />
+  </my-flipping-tile>
+
+</body>
+
+</html>
