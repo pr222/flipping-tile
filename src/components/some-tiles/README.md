@@ -3,13 +3,20 @@ A web component showing tiles with cards that can be faced up or faced down card
 
 ## Attributes
 
-### faceup
-Displays which part of the card that is facing the viewer at a given moment.
+### disabled
+When disabled card displays with faced opacity and do not respond to keypresses.
+
+Default value: undefined.
 
 ### hidden
-Hides the side of the card that is not facing up at the moment.
+Hides the card, leaving only the border where the card is placed.
 
-Default values: `hidden` for the part frontSide and `faceup` for the part backSide.
+Default value: undefined.
+
+### faceup
+When defined it displays the front part of the card faced up for the viewer.
+
+Default value: undefined.
 
 ## Methods
 
@@ -25,15 +32,16 @@ Returns: (Reference to self?)
 ### `(public method)`
 
 ## Events 
-| Event Name | Fired When |
-|------------|------------|
-|  `_flip`   | When a card is faced up or down. |
+|  Event Name  | Fired When |
+|--------------|------------|
+|`flippingCard`| When a card is flipped. |
 
 ## Styling with CSS
+Size and default border styles are changed on the element itself (host).
 The backside of the card is styleable with the part `backSide`.
 The frontside of the card is styleable with the part `frontSide`.
 
 ## Example
 (```html
-   <some-tiles><img src="/images/img.png"></some-tiles>
+   <some-tiles><img src="/images/img.png" alt="image"></some-tiles>
 ```)

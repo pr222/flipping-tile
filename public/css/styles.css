@@ -1,13 +1,16 @@
 @charset "UTF-8";
 
 /*body {}*/
-/*
-some-tiles.pinky::part(backTile){
+
+some-tiles.pinky::part(backSide){
     background-color: #FF11FF;
+    background-image: url(../images/0.png);
 }
-*/
+
 /*
-some-tiles::part(backSide){
+some-tiles {
     background-color: blueviolet;
+    border: 5px solid #000000;
+    width: 80px;
 }
 */

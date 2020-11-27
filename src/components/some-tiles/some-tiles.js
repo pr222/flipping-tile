@@ -15,36 +15,41 @@ template.innerHTML = `
 <style>
   :host {
   display: inline-block;
-  border-radius: 0px;
   width: 85px;
   height: 100px;
   margin: 5px;
+  border-radius: 3px;
+  border: 3px solid #CCCCCC;
   }
 
-  :host([faceup]) #back {
-    background-color: #FFFFFF;
-  }
-
-  :host([faceup]) #front {
-    background-color: #FF66CC;
-  }
-
-  :disabled {
-    border: 2px dotted #CCCCCC;
-  }
-*/
-  [hidden] {
+  :host([hidden]) #tile {
     visibility: hidden;
   }
 
-  #tile {
+  :host([disabled]) {
+    border: 2px dotted #CCCCCC;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  :host([faceup]) #back {
+    display: none;
+  }
+
+  :host([faceup]) #front {
+    display: flex;
+  }
+
+  #tile, slot {
      padding: 0px;
      width: 100%;
      height: 100%;
+     border: none;
   }
 
   #tile:focus {
-      outline: 2px solid #000000;
+      outline: 3px solid #000000;
+      box-shadow: 0px 10px 30px;
   }
 
   #front, #back {
@@ -52,7 +57,7 @@ template.innerHTML = `
       height: 100%;
   }
 
-  #front hidden {
+  #front {
       display: none;
   }
 
@@ -64,13 +69,17 @@ template.innerHTML = `
     background-position: center;
   }
 
+  ::slotted(img) {
+    width: 100%;
+  }
+
 </style>
 
-<button type="button" part="wholeTile" id="tile">
-    <div part="frontSide" id="front" hidden>
+<button type="button" id="tile">
+    <div part="frontSide" id="front">
       <slot></slot>
     </div>
-    <div part="backSide" id="back" class="faceup"></div>
+    <div part="backSide" id="back" faceup></div>
 </button>
 `
 
@@ -100,7 +109,7 @@ customElements.define('some-tiles',
      * @returns {string} - The observed attributes.
      */
     static get observedAttributes () {
-      return []
+      return ['hidden', 'disabled', 'faceup']
     }
 
     /**
@@ -111,7 +120,14 @@ customElements.define('some-tiles',
      * @param {any} newValue - The new attribute.
      */
     attributeChangedCallback (name, oldValue, newValue) {
-
+      if (name === 'hidden') {
+        this._tile.hidden = newValue
+      } else if (name === 'disabled') {
+        this._tile.disabled = newValue
+        this._tile.tabIndex = -3
+      } else if (name === 'faceup') {
+        this._tile.faceup = newValue
+      }
     }
 
     /**
@@ -119,7 +135,6 @@ customElements.define('some-tiles',
      */
     connectedCallback () {
       this.addEventListener('click', this._cardClicked)
-      // this.addEventListener('keydown', this._cardClicked)
     }
 
     /**
@@ -127,31 +142,29 @@ customElements.define('some-tiles',
      */
     disconnectedCallback () {
       this.removeEventListener('click', this._cardClicked)
-      // this.removeEventListener('keydown', this._cardClicked)
     }
 
     /**
-     * Click event
+     * Click event, using mouse or the Enter key for focused element.
      *
-     * @param {Event} - Mouse or key press event.
+     * @param {event} event - Mouse or key press event.
      */
     _cardClicked (event) {
-        if (event.button === 0 &&
-            event.buttons < 2 &&
-            !event.altKey &&
-            !event.ctrlKey &&
-            !event.metaKey &&
-            !event.shiftKey) {
-            this._flip()
-          }
-          // this._flip()
-    
-    }
+      // If hidden, do nothing further and return.
+      if (this.hasAttribute('hidden')) {
+        return
+      }
 
-    _flip () {
-      // Changed what is flipped, the card not the entire tile.
-      this.setAttribute('faceup', '')
-    //   this._tile.setAttribute('focus', '')
+      // If card is not faceup, make it faceup.
+      if (!this.hasAttribute('faceup')) {
+        this.setAttribute('faceup', '')
+      } else {
+      // If faced up when flipping, remove faceup.
+        this.removeAttribute('faceup')
+      }
+
+      // Release the custom flippingCard event.
+      this.dispatchEvent(new CustomEvent('flippingCard', { bubbles: true }))
     }
   }
 )

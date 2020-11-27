@@ -7,3 +7,6 @@
 import './components/some-tiles/'
 
 // When 'flip' event - log {$innerHTML} of the element.
+document.querySelector('body').addEventListener('flippingCard', event => {
+  console.log(event.target.innerHTML.trim())
+})
