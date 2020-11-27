@@ -15,33 +15,62 @@ template.innerHTML = `
 <style>
   :host {
   display: inline-block;
+  border-radius: 0px;
+  width: 85px;
+  height: 100px;
+  margin: 5px;
   }
 
-  .button {
-    max-height: 50px;
-    max-width: 50px;
-    border-radius: 2px;        
+  :host([faceup]) #back {
+    background-color: #FFFFFF;
+  }
+
+  :host([faceup]) #front {
+    background-color: #FF66CC;
   }
 
   :disabled {
+    border: 2px dotted #CCCCCC;
+  }
+*/
+  [hidden] {
     visibility: hidden;
-    border: 2px solid #000000
+  }
+
+  #tile {
+     padding: 0px;
+     width: 100%;
+     height: 100%;
+  }
+
+  #tile:focus {
+      outline: 2px solid #000000;
+  }
+
+  #front, #back {
+      width: 100%;
+      height: 100%;
+  }
+
+  #front hidden {
+      display: none;
   }
 
   #back {
     background-image: url("${backImg}");
     background-repeat: no-repeat;
+    background-color: #ffcc00;
+    background-size: 50%;
     background-position: center;
-    background-color: #cccccc;
-    background-size: cover;
   }
+
 </style>
 
 <button type="button" part="wholeTile" id="tile">
-    <div part="frontTile">
+    <div part="frontSide" id="front" hidden>
       <slot></slot>
     </div>
-    <div part"backTile" id="back"></div>
+    <div part="backSide" id="back" class="faceup"></div>
 </button>
 `
 
@@ -58,9 +87,9 @@ customElements.define('some-tiles',
 
       // Attach shadow and append template.
       this.attachShadow({ mode: 'open' })
-        .addendChild(template.content.cloneNode(true))
+        .appendChild(template.content.cloneNode(true))
 
-      // More stuff
+      this._tile = this.shadowRoot.querySelector('#tile')
     }
 
     /**
@@ -89,14 +118,40 @@ customElements.define('some-tiles',
      * Called when the element has been insterted into the DOM.
      */
     connectedCallback () {
-      // Event listeners
+      this.addEventListener('click', this._cardClicked)
+      // this.addEventListener('keydown', this._cardClicked)
     }
 
     /**
      * Called when the element has been removed from the DOM.
      */
     disconnectedCallback () {
-      this.removeEventListener('', this)
+      this.removeEventListener('click', this._cardClicked)
+      // this.removeEventListener('keydown', this._cardClicked)
+    }
+
+    /**
+     * Click event
+     *
+     * @param {Event} - Mouse or key press event.
+     */
+    _cardClicked (event) {
+        if (event.button === 0 &&
+            event.buttons < 2 &&
+            !event.altKey &&
+            !event.ctrlKey &&
+            !event.metaKey &&
+            !event.shiftKey) {
+            this._flip()
+          }
+          // this._flip()
+    
+    }
+
+    _flip () {
+      // Changed what is flipped, the card not the entire tile.
+      this.setAttribute('faceup', '')
+    //   this._tile.setAttribute('focus', '')
     }
   }
 )

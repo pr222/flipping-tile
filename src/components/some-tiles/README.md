@@ -1,38 +1,39 @@
 # &lt;some-tiles&gt;
-A web component showing tiles as face up and face down cards.
+A web component showing tiles with cards that can be faced up or faced down cards.
 
 ## Attributes
 
-### faceUp
-Descriptiton...
+### faceup
+Displays which part of the card that is facing the viewer at a given moment.
 
-### faceDown
-Description...
+### hidden
+Hides the side of the card that is not facing up at the moment.
 
-Default values: ....
+Default values: `hidden` for the part frontSide and `faceup` for the part backSide.
 
 ## Methods
 
-### `(public)`
+### `(public method)`
 Description...
 
 Parameters: (any or none?)
 
 Returns: (Reference to self?)
 
-### `(public)`
+### `(public method)`
 
-### `(public)`
+### `(public method)`
 
 ## Events 
 | Event Name | Fired When |
 |------------|------------|
-| `event` | when... |
+|  `_flip`   | When a card is faced up or down. |
 
 ## Styling with CSS
-(The text (p-element) is styleable using the part `text`)
+The backside of the card is styleable with the part `backSide`.
+The frontside of the card is styleable with the part `frontSide`.
 
 ## Example
 (```html
-   <bart-board text="This is the text that will be written" speed="50"></bart-board>
+   <some-tiles><img src="/images/img.png"></some-tiles>
 ```)

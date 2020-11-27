@@ -1,3 +1,13 @@
 @charset "UTF-8";
 
 /*body {}*/
+/*
+some-tiles.pinky::part(backTile){
+    background-color: #FF11FF;
+}
+*/
+/*
+some-tiles::part(backSide){
+    background-color: blueviolet;
+}
+*/
