@@ -41,24 +41,24 @@ template.innerHTML = `
   }
 
   #tile, slot {
-     padding: 0px;
-     width: 100%;
-     height: 100%;
-     border: none;
+    padding: 0px;
+    width: 100%;
+    height: 100%;
+    border: none;
   }
 
-  #tile:focus {
-      outline: 3px solid #000000;
-      box-shadow: 0px 10px 30px;
+  #tile:focus, #tile:hover {
+    outline: 3px solid #000000;
+    box-shadow: 0px 10px 30px;
   }
 
   #front, #back {
-      width: 100%;
-      height: 100%;
+    width: 100%;
+    height: 100%;
   }
 
   #front {
-      display: none;
+    display: none;
   }
 
   #back {
